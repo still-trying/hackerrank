@@ -1,0 +1,57 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'toys' function below.
+#
+# The function is expected to return an INTEGER.
+# The function accepts INTEGER_ARRAY w as parameter.
+#
+
+def toys(w):
+    # Write your code here
+    
+    # Sort the weights
+    w.sort()
+    
+    # Initialize the number of containers
+    containers = 0
+    n = len(w)
+    i = 0
+    
+    while i < n:
+        # Start a new container with the current item
+        containers += 1
+        # The minimum weight in the current container
+        min_weight = w[i]
+        # The maximum weight allowed in the current container
+        max_weight = min_weight + 4
+        
+        # Move to the next item that can fit in the current container
+        while i < n and w[i] <= max_weight:
+            i += 1
+            
+    return containers
+
+# Example usage:
+orders = [1, 2, 3, 21, 7, 12, 14, 21]
+print(toys(orders))  # Output: 4
+
+
+if _name_ == '_main_':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input().strip())
+
+    w = list(map(int, input().rstrip().split()))
+
+    result = toys(w)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
