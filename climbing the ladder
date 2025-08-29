@@ -1,0 +1,34 @@
+typedef struct {
+    int customer_num;
+    int delivery_time;
+} Order;
+
+int cmp(const void *a, const void *b) {
+    Order *o1 = (Order*)a;
+    Order *o2 = (Order*)b;
+
+    if (o1->delivery_time != o2->delivery_time)
+        return o1->delivery_time - o2->delivery_time;
+
+    return o1->customer_num - o2->customer_num;
+}
+
+int* jimOrders(int orders_rows, int orders_columns, int** orders, int* result_count) {
+    Order* arr = malloc(orders_rows * sizeof(Order));
+
+    for (int i = 0; i < orders_rows; i++) {
+        arr[i].customer_num = i + 1;
+        arr[i].delivery_time = orders[i][0] + orders[i][1];
+    }
+
+    qsort(arr, orders_rows, sizeof(Order), cmp);
+
+    *result_count = orders_rows;
+    int* result = malloc(orders_rows * sizeof(int));
+    for (int i = 0; i < orders_rows; i++) {
+        result[i] = arr[i].customer_num;
+    }
+
+    free(arr);
+    return result;
+}
